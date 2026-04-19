@@ -1,0 +1,56 @@
+region,holiday_name,date,notes,bunting,year,week_number,iso_year
+England/Wales,New Year’s Day,2025-01-01,,True,2025,1,2025
+England/Wales,Good Friday,2025-04-18,,False,2025,16,2025
+England/Wales,Easter Monday,2025-04-21,,True,2025,17,2025
+England/Wales,Early May bank holiday,2025-05-05,,True,2025,19,2025
+England/Wales,Spring bank holiday,2025-05-26,,True,2025,22,2025
+England/Wales,Summer bank holiday,2025-08-25,,True,2025,35,2025
+England/Wales,Christmas Day,2025-12-25,,True,2025,52,2025
+England/Wales,Boxing Day,2025-12-26,,True,2025,52,2025
+England/Wales,New Year’s Day,2026-01-01,,True,2026,1,2026
+England/Wales,Good Friday,2026-04-03,,False,2026,14,2026
+England/Wales,Easter Monday,2026-04-06,,True,2026,15,2026
+England/Wales,Early May bank holiday,2026-05-04,,True,2026,19,2026
+England/Wales,Spring bank holiday,2026-05-25,,True,2026,22,2026
+England/Wales,Summer bank holiday,2026-08-31,,True,2026,36,2026
+England/Wales,Christmas Day,2026-12-25,,True,2026,52,2026
+England/Wales,Boxing Day,2026-12-28,Substitute day,True,2026,53,2026
+Scotland,New Year’s Day,2025-01-01,,True,2025,1,2025
+Scotland,2nd January,2025-01-02,,True,2025,1,2025
+Scotland,Good Friday,2025-04-18,,False,2025,16,2025
+Scotland,Early May bank holiday,2025-05-05,,True,2025,19,2025
+Scotland,Spring bank holiday,2025-05-26,,True,2025,22,2025
+Scotland,Summer bank holiday,2025-08-04,,True,2025,32,2025
+Scotland,St Andrew’s Day,2025-12-01,Substitute day,True,2025,49,2025
+Scotland,Christmas Day,2025-12-25,,True,2025,52,2025
+Scotland,Boxing Day,2025-12-26,,True,2025,52,2025
+Scotland,New Year’s Day,2026-01-01,,True,2026,1,2026
+Scotland,2nd January,2026-01-02,,True,2026,1,2026
+Scotland,Good Friday,2026-04-03,,False,2026,14,2026
+Scotland,Early May bank holiday,2026-05-04,,True,2026,19,2026
+Scotland,Spring bank holiday,2026-05-25,,True,2026,22,2026
+Scotland,World Cup bank holiday,2026-06-15,,True,2026,25,2026
+Scotland,Summer bank holiday,2026-08-03,,True,2026,32,2026
+Scotland,St Andrew’s Day,2026-11-30,,True,2026,49,2026
+Scotland,Christmas Day,2026-12-25,,True,2026,52,2026
+Scotland,Boxing Day,2026-12-28,Substitute day,True,2026,53,2026
+Northern Ireland,New Year’s Day,2025-01-01,,True,2025,1,2025
+Northern Ireland,St Patrick’s Day,2025-03-17,,True,2025,12,2025
+Northern Ireland,Good Friday,2025-04-18,,False,2025,16,2025
+Northern Ireland,Easter Monday,2025-04-21,,True,2025,17,2025
+Northern Ireland,Early May bank holiday,2025-05-05,,True,2025,19,2025
+Northern Ireland,Spring bank holiday,2025-05-26,,True,2025,22,2025
+Northern Ireland,Battle of the Boyne (Orangemen’s Day),2025-07-14,Substitute day,False,2025,29,2025
+Northern Ireland,Summer bank holiday,2025-08-25,,True,2025,35,2025
+Northern Ireland,Christmas Day,2025-12-25,,True,2025,52,2025
+Northern Ireland,Boxing Day,2025-12-26,,True,2025,52,2025
+Northern Ireland,New Year’s Day,2026-01-01,,True,2026,1,2026
+Northern Ireland,St Patrick’s Day,2026-03-17,,True,2026,12,2026
+Northern Ireland,Good Friday,2026-04-03,,False,2026,14,2026
+Northern Ireland,Easter Monday,2026-04-06,,True,2026,15,2026
+Northern Ireland,Early May bank holiday,2026-05-04,,True,2026,19,2026
+Northern Ireland,Spring bank holiday,2026-05-25,,True,2026,22,2026
+Northern Ireland,Battle of the Boyne (Orangemen’s Day),2026-07-13,Substitute day,False,2026,29,2026
+Northern Ireland,Summer bank holiday,2026-08-31,,True,2026,36,2026
+Northern Ireland,Christmas Day,2026-12-25,,True,2026,52,2026
+Northern Ireland,Boxing Day,2026-12-28,Substitute day,True,2026,53,2026

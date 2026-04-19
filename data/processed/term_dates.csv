@@ -1,0 +1,67 @@
+region,holiday_name,start_date,end_date,holiday_type
+England - London,Easter 2025,2025-04-11,2025-04-25,main_holiday
+England - London,May Half Term 2025,2025-05-26,2025-05-30,half_term
+England - London,Summer 2025,2025-07-22,2025-09-02,main_holiday
+England - London,October Half Term 2025,2025-10-27,2025-10-31,half_term
+England - London,Christmas 2025,2025-12-22,2026-01-02,main_holiday
+England - London,Feb Half Term 2026,2026-02-16,2026-02-20,half_term
+England - London,Easter 2026,2026-04-02,2026-04-17,main_holiday
+England - London,May Half Term 2026,2026-05-25,2026-05-29,half_term
+England - London,Summer 2026,2026-07-21,2026-09-01,main_holiday
+England - London,October Half Term 2026,2026-10-26,2026-10-30,half_term
+England - Midlands,Easter 2025,2025-04-11,2025-04-25,main_holiday
+England - Midlands,May Half Term 2025,2025-05-26,2025-05-30,half_term
+England - Midlands,Summer 2025,2025-07-22,2025-09-02,main_holiday
+England - Midlands,October Half Term 2025,2025-10-27,2025-10-31,half_term
+England - Midlands,Christmas 2025,2025-12-22,2026-01-02,main_holiday
+England - Midlands,Feb Half Term 2026,2026-02-16,2026-02-20,half_term
+England - Midlands,Easter 2026,2026-04-02,2026-04-17,main_holiday
+England - Midlands,May Half Term 2026,2026-05-25,2026-05-29,half_term
+England - Midlands,Summer 2026,2026-07-21,2026-09-01,main_holiday
+England - Midlands,October Half Term 2026,2026-10-26,2026-10-30,half_term
+England - North,Easter 2025,2025-04-11,2025-04-25,main_holiday
+England - North,May Half Term 2025,2025-05-26,2025-05-30,half_term
+England - North,Summer 2025,2025-07-22,2025-09-02,main_holiday
+England - North,October Half Term 2025,2025-10-27,2025-10-31,half_term
+England - North,Christmas 2025,2025-12-22,2026-01-02,main_holiday
+England - North,Feb Half Term 2026,2026-02-16,2026-02-20,half_term
+England - North,Easter 2026,2026-04-02,2026-04-17,main_holiday
+England - North,May Half Term 2026,2026-05-25,2026-05-29,half_term
+England - North,Summer 2026,2026-07-21,2026-09-01,main_holiday
+England - North,October Half Term 2026,2026-10-26,2026-10-30,half_term
+England - South,Easter 2025,2025-04-11,2025-04-25,main_holiday
+England - South,May Half Term 2025,2025-05-26,2025-05-30,half_term
+England - South,Summer 2025,2025-07-22,2025-09-02,main_holiday
+England - South,October Half Term 2025,2025-10-27,2025-10-31,half_term
+England - South,Christmas 2025,2025-12-22,2026-01-02,main_holiday
+England - South,Feb Half Term 2026,2026-02-16,2026-02-20,half_term
+England - South,Easter 2026,2026-04-02,2026-04-17,main_holiday
+England - South,May Half Term 2026,2026-05-25,2026-05-29,half_term
+England - South,Summer 2026,2026-07-21,2026-09-01,main_holiday
+England - South,October Half Term 2026,2026-10-26,2026-10-30,half_term
+Northern Ireland,Easter 2025,2025-04-14,2025-04-25,main_holiday
+Northern Ireland,May Half Term 2025,2025-05-26,2025-05-30,half_term
+Northern Ireland,Summer 2025,2025-07-01,2025-08-29,main_holiday
+Northern Ireland,October Half Term 2025,2025-10-27,2025-10-31,half_term
+Northern Ireland,Christmas 2025,2025-12-22,2026-01-02,main_holiday
+Northern Ireland,Easter 2026,2026-04-02,2026-04-17,main_holiday
+Northern Ireland,Summer 2026,2026-07-01,2026-08-28,main_holiday
+Scotland,Spring Break 2025,2025-04-07,2025-04-18,main_holiday
+Scotland,May Day 2025,2025-05-05,2025-05-05,bank_holiday
+Scotland,Summer 2025,2025-06-27,2025-08-18,main_holiday
+Scotland,October Break 2025,2025-10-13,2025-10-24,half_term
+Scotland,Christmas 2025,2025-12-22,2026-01-05,main_holiday
+Scotland,Feb Break 2026,2026-02-09,2026-02-13,half_term
+Scotland,Spring Break 2026,2026-04-06,2026-04-17,main_holiday
+Scotland,Summer 2026,2026-06-26,2026-08-17,main_holiday
+Scotland,October Break 2026,2026-10-12,2026-10-23,half_term
+Wales,Easter 2025,2025-04-11,2025-04-25,main_holiday
+Wales,May Half Term 2025,2025-05-26,2025-05-30,half_term
+Wales,Summer 2025,2025-07-22,2025-09-02,main_holiday
+Wales,October Half Term 2025,2025-10-27,2025-10-31,half_term
+Wales,Christmas 2025,2025-12-22,2026-01-02,main_holiday
+Wales,Feb Half Term 2026,2026-02-16,2026-02-20,half_term
+Wales,Easter 2026,2026-04-02,2026-04-17,main_holiday
+Wales,May Half Term 2026,2026-05-25,2026-05-29,half_term
+Wales,Summer 2026,2026-07-21,2026-09-01,main_holiday
+Wales,October Half Term 2026,2026-10-26,2026-10-30,half_term

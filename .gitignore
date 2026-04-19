@@ -8,5 +8,5 @@ venv/
 dist/
 build/
 .ipynb_checkpoints/
-data/processed/
+# data/processed/ — committing these so Streamlit Cloud doesn't need to scrape on cold start
 *.DS_Store
