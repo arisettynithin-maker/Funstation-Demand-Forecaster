@@ -11,20 +11,14 @@ yet, the app runs the pipeline first (takes ~30s on first load).
 """
 
 import os
-import sys
 import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 
-# resolve repo root whether running locally or on Streamlit Cloud
-# Streamlit Cloud runs from repo root; __file__ is app/streamlit_app.py
-_here = os.path.abspath(__file__)                          # .../app/streamlit_app.py
-_app_dir = os.path.dirname(_here)                          # .../app/
-ROOT = os.path.dirname(_app_dir)                           # repo root
-DATA_DIR = os.path.join(ROOT, "data", "processed")
-sys.path.insert(0, os.path.join(ROOT, "data"))
+# Streamlit Cloud always runs with cwd = repo root, so this just works
+DATA_DIR = "data/processed"
 
 st.set_page_config(
     page_title="Funstation Demand Forecaster",
@@ -52,39 +46,34 @@ ALL_REGIONS = [
 # Data loading
 # ---------------------------------------------------------------------------
 
-@st.cache_data(ttl=3600)
+@st.cache_data
 def load_demand_index() -> pd.DataFrame:
-    path = os.path.join(DATA_DIR, "demand_index.csv")
-    if not os.path.exists(path):
-        st.error(f"Data file not found: {path}\n\nPlease run `python data/build_demand_index.py` locally first.")
-        st.stop()
-    return pd.read_csv(path, parse_dates=["week_start", "week_end"])
+    df = pd.read_csv(f"{DATA_DIR}/demand_index.csv")
+    df["week_start"] = pd.to_datetime(df["week_start"])
+    df["week_end"]   = pd.to_datetime(df["week_end"])
+    df["is_school_holiday"]   = df["is_school_holiday"].astype(str).str.lower() == "true"
+    df["is_bank_holiday_week"] = df["is_bank_holiday_week"].astype(str).str.lower() == "true"
+    df["is_peak_week"]         = df["is_peak_week"].astype(str).str.lower() == "true"
+    return df
 
 
-@st.cache_data(ttl=3600)
+@st.cache_data
 def load_bank_holidays() -> pd.DataFrame:
-    path = os.path.join(DATA_DIR, "bank_holidays.csv")
-    if not os.path.exists(path):
-        st.error(f"Data file not found: {path}")
-        st.stop()
-    return pd.read_csv(path, parse_dates=["date"])
+    df = pd.read_csv(f"{DATA_DIR}/bank_holidays.csv")
+    df["date"] = pd.to_datetime(df["date"])
+    return df
 
 
-@st.cache_data(ttl=3600)
+@st.cache_data
 def load_term_dates() -> pd.DataFrame:
-    path = os.path.join(DATA_DIR, "term_dates.csv")
-    if not os.path.exists(path):
-        st.error(f"Data file not found: {path}")
-        st.stop()
-    return pd.read_csv(path, parse_dates=["start_date", "end_date"])
+    df = pd.read_csv(f"{DATA_DIR}/term_dates.csv")
+    df["start_date"] = pd.to_datetime(df["start_date"])
+    df["end_date"]   = pd.to_datetime(df["end_date"])
+    return df
 
 
 def apply_filters(df: pd.DataFrame, regions: list, year: int, holiday_filter: str) -> pd.DataFrame:
     filtered = df[df["region"].isin(regions) & (df["iso_year"] == year)].copy()
-    # cast to bool — pandas reads CSV booleans as strings on some versions
-    filtered["is_school_holiday"] = filtered["is_school_holiday"].astype(str).str.lower() == "true"
-    filtered["is_bank_holiday_week"] = filtered["is_bank_holiday_week"].astype(str).str.lower() == "true"
-    filtered["is_peak_week"] = filtered["is_peak_week"].astype(str).str.lower() == "true"
     if holiday_filter == "School Holidays Only":
         filtered = filtered[filtered["is_school_holiday"]]
     elif holiday_filter == "Bank Holidays Only":
@@ -512,7 +501,6 @@ def page_staffing_simulator(demand_df: pd.DataFrame, regions: list, year: int):
     st.markdown("---")
 
     filtered = demand_df[demand_df["region"].isin(regions) & (demand_df["iso_year"] == year)].copy()
-    filtered["is_peak_week"] = filtered["is_peak_week"].astype(str).str.lower() == "true"
     filtered = filtered[filtered["is_peak_week"]].copy()
 
     if filtered.empty:
