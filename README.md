@@ -8,7 +8,14 @@
 
 > A regional demand forecasting tool for UK family entertainment centres — combining school holiday calendars, bank holidays, and BRC footfall data into a weekly demand index across all Funstation venue regions.
 
-**Live demo → [Streamlit URL — add after deployment]**
+<img width="2519" height="1001" alt="image" src="https://github.com/user-attachments/assets/893ff3a4-7fbe-4468-bdc6-98a7a48ca54b" />
+
+<img width="2513" height="955" alt="image" src="https://github.com/user-attachments/assets/5a06c999-8f80-44eb-ba39-a6d22c39543e" />
+
+<img width="2528" height="746" alt="image" src="https://github.com/user-attachments/assets/ee540d84-7b56-48cd-bda3-10a4aed1bf97" />
+
+<img width="2534" height="977" alt="image" src="https://github.com/user-attachments/assets/1bc4a735-04d5-449f-92fb-21183a87cead" />
+
 
 ---
 
