@@ -1,64 +1,54 @@
 # Funstation Demand Forecaster
 
-I built this over a few weekends after reading Funstation's annual report and noticing that their revenue commentary was almost entirely about school holiday performance, but there wasn't any obvious tooling to systematically map that across their 14+ UK venues in different regions with different term date calendars.
+![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=flat&logo=python&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-1.32-FF4B4B?style=flat&logo=streamlit&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-2.2-150458?style=flat&logo=pandas&logoColor=white)
+![Plotly](https://img.shields.io/badge/Plotly-5.20-3F4F75?style=flat&logo=plotly&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat)
 
-As someone who spent three years at Amazon UK building demand forecasting systems for fulfilment, the pattern was immediately familiar — but the FEC version of the problem is simpler and, honestly, more tractable. School holidays are published a year in advance. Bank holidays are fixed. The main variable is footfall trend direction.
+> A regional demand forecasting tool for UK family entertainment centres — combining school holiday calendars, bank holidays, and BRC footfall data into a weekly demand index across all Funstation venue regions.
 
----
-
-## The problem I spotted
-
-Funstation's venues are spread across England, Scotland, and Northern Ireland. Scotland's summer holiday starts in late June and runs 8 weeks. England's starts in late July and runs 6 weeks. Northern Ireland's October half-term sometimes doesn't align with England's at all.
-
-If you're running finance for a business like this and planning staffing, marketing spend, or pricing across 14 venues — doing it from a national average is just wrong. The peak for Edinburgh is not the same week as the peak for Northampton.
-
-The finance function probably knows this intuitively but I'd bet they're still working off spreadsheets rather than a joined-up view of regional term dates + market footfall + historical demand patterns.
+**Live demo → [Streamlit URL — add after deployment]**
 
 ---
 
-## My approach
+## The problem
 
-1. **Scrape term dates** from gov.uk, mygov.scot, and nidirect — England, Wales, Scotland, Northern Ireland — and normalise into a clean regional calendar with holiday type (main holiday vs half-term vs bank holiday).
+Funstation operates 14+ venues across England, Scotland, and Northern Ireland. Their revenue is almost entirely driven by school holidays, half-terms, and bank holiday weekends — but each region runs on a different term date calendar.
 
-2. **Pull UK bank holidays** from the gov.uk JSON API — splits by nation which is exactly what I need.
+Scotland's summer holiday starts in late June. England's starts in late July. Northern Ireland's October half-term doesn't always align with England's. If you're planning staffing, pricing, or marketing spend from a national average, you're getting the timing wrong for most of your venues.
 
-3. **Load BRC-Sensormatic footfall data** — monthly YoY % change by retail destination type (shopping centres most relevant for FEC venues). This acts as a continuous market-level modifier on top of the holiday-driven signal.
+I built this after reading Funstation's annual reports and noticing there was no systematic way to view demand peaks regionally rather than nationally. The finance function almost certainly knows this problem exists — this is what a solution looks like.
 
-4. **Build a weekly demand index**: school holiday week = 2x baseline, bank holiday = 1.5x, footfall trend as a continuous modifier. Multiplicative where they overlap, capped at 3.5x to avoid extreme outliers skewing the heatmap.
+---
 
-5. **Visualise** in a Streamlit app with 4 pages: national overview, regional deep-dive, calendar comparison, and a staffing cost simulator.
+## Approach
+
+```
+School term dates (gov.uk / mygov.scot / nidirect)
+        +
+UK bank holidays (gov.uk JSON API)
+        +
+BRC-Sensormatic footfall index (monthly YoY %)
+        ↓
+Weekly demand multiplier per region
+  — school holiday week:  2.0× baseline
+  — bank holiday week:    1.5× baseline
+  — footfall modifier:    continuous ±% adjustment
+        ↓
+Streamlit dashboard + SQL analysis layer
+```
+
+Overlapping factors take the max rather than the product — a bank holiday inside summer holidays doesn't double demand, families are already out. The index is capped at 3.5× to prevent outliers from breaking visualisations.
 
 ---
 
 ## Key findings
 
-- **Summer dominates but Scotland's window is 3-4 weeks earlier** — if you're planning a "summer push" nationally, you're missing Edinburgh's peak by the time you launch it for Northampton
-- **October half-term is the most important standalone peak** — it's the one period outside summer where families actively seek out leisure venues and it aligns well across most England regions
-- **Standalone bank holidays (May, August) drive meaningful uplift** — but they're easy to under-staff because they're not obviously "holidays" in the same way as school breaks
-- **Scotland has the highest demand variance** — long summer + genuinely quiet autumn = the most volatile revenue profile in the estate, needs a proper flex staffing model
-
----
-
-## How to run
-
-```bash
-pip install -r requirements.txt
-streamlit run app/streamlit_app.py
-```
-
-On first run, the app builds the demand index from source data (takes ~30 seconds). After that it's cached.
-
-To pre-build the data manually:
-```bash
-cd data/
-python build_demand_index.py
-```
-
----
-
-## Live demo
-
-[Streamlit URL — add after deployment]
+- **Summer dominates but Scotland peaks 3–4 weeks earlier than England** — a national "summer push" campaign launched in late July misses Edinburgh's peak entirely
+- **October half-term is the highest-value standalone peak** — the one week outside summer where families actively seek out leisure venues, easy to under-staff because it's not as psychologically obvious as summer
+- **Standalone bank holidays (May, August) drive 40–60% uplift vs baseline** for most regions — bigger than most ops teams account for
+- **Scotland has the highest demand variance** in the estate — long summer + genuinely quiet autumn means the biggest swings, needs a proper flex staffing model rather than a fixed rota
 
 ---
 
@@ -66,34 +56,104 @@ python build_demand_index.py
 
 ```
 funstation-demand-forecaster/
-  data/
-    fetch_term_dates.py     — scrapes school holidays for all UK regions
-    fetch_bank_holidays.py  — gov.uk bank holidays API
-    fetch_footfall.py       — BRC footfall index loader
-    build_demand_index.py   — combines everything into weekly demand scores
-    processed/              — CSVs generated by the scripts above
-  notebooks/
-    demand_analysis.ipynb   — exploratory analysis and methodology walkthrough
-  sql/
-    01-10_*.sql             — SQL analysis queries (window functions, CTEs, etc.)
-    README_sql.md           — index of all SQL files with business question + concepts
-  app/
-    streamlit_app.py        — 4-page Streamlit dashboard
-  .streamlit/
-    config.toml             — dark theme config with Funstation orange
-  docs/
-    deployment.md           — Streamlit Cloud deployment steps
-  requirements.txt
-  README.md                 — this file
+│
+├── data/
+│   ├── fetch_term_dates.py       # scrapes school holidays — England, Scotland, NI, Wales
+│   ├── fetch_bank_holidays.py    # gov.uk bank holidays JSON API
+│   ├── fetch_footfall.py         # BRC-Sensormatic footfall index loader
+│   ├── build_demand_index.py     # combines all sources → weekly demand multiplier
+│   └── processed/                # generated CSVs (gitignored)
+│
+├── notebooks/
+│   └── demand_analysis.ipynb     # methodology walkthrough + visualisations
+│
+├── sql/
+│   ├── 01_peak_weeks_by_region.sql          # DENSE_RANK — top weeks per region
+│   ├── 02_holiday_overlap_analysis.sql      # self-join — national campaign windows
+│   ├── 03_bank_holiday_uplift_cohort.sql    # cohort analysis — embedded vs standalone BHs
+│   ├── 04_footfall_trend_vs_holiday.sql     # LAG — MoM footfall vs holiday intensity
+│   ├── 05_rolling_demand_moving_average.sql # ROWS BETWEEN window frame
+│   ├── 06_yoy_peak_comparison.sql           # CTE — 2025 vs 2026 calendar shift
+│   ├── 07_venue_region_mapping.sql          # multi-table join — venue → region → holidays
+│   ├── 08_staffing_trigger_flags.sql        # CASE WHEN threshold logic
+│   ├── 09_low_demand_gap_analysis.sql       # gaps-and-islands — maintenance windows
+│   ├── 10_regional_sensitivity_ranking.sql  # STDDEV window — demand variance ranking
+│   └── README_sql.md                        # index of all queries + concepts demonstrated
+│
+├── app/
+│   └── streamlit_app.py          # 4-page Streamlit dashboard
+│
+├── .streamlit/
+│   └── config.toml               # dark theme — Funstation orange (#FF6B35)
+│
+├── docs/
+│   └── deployment.md             # Streamlit Cloud deployment steps
+│
+└── requirements.txt
 ```
+
+---
+
+## App pages
+
+| Page | What it shows |
+|------|--------------|
+| **National Overview** | Demand heatmap (week × region), metric cards, top 10 peak weeks bar chart |
+| **Region Deep-Dive** | Weekly demand line chart with 1.0× and 1.5× threshold markers, top 10 peak weeks table |
+| **Holiday Calendar** | Gantt-style holiday timeline, side-by-side region comparison, overlap analysis |
+| **Staffing Simulator** | Input baseline staff + hourly wage → outputs additional headcount and weekly labour cost per peak week, CSV export |
+
+All pages support sidebar filters: region multiselect, year (2025/2026), holiday type.
+
+---
+
+## SQL coverage
+
+The 10 SQL files in `sql/` demonstrate:
+
+`DENSE_RANK` · `LAG` · `STDDEV` · `PERCENTILE_CONT` · `AVG() OVER (ROWS BETWEEN)` · gaps-and-islands · cohort analysis · self-join · `FULL OUTER JOIN` · CTEs · YoY comparison
+
+Written as analyst notes, not just query dumps — each file explains the business question and why the approach was chosen.
+
+---
+
+## How to run
+
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Option 1: let the app build data on first load (auto, ~30s)
+streamlit run app/streamlit_app.py
+
+# Option 2: pre-build the data manually
+cd data && python build_demand_index.py
+cd .. && streamlit run app/streamlit_app.py
+```
+
+Requires Python 3.10+. No API keys needed — all data sources are public.
+
+---
+
+## Data sources
+
+| Source | Data | Method |
+|--------|------|--------|
+| [gov.uk](https://www.gov.uk/school-term-holiday-dates) | England & Wales school term dates | BeautifulSoup scrape |
+| [mygov.scot](https://www.mygov.scot/school-holidays) | Scotland school term dates | BeautifulSoup scrape |
+| [nidirect.gov.uk](https://www.nidirect.gov.uk/articles/school-term-holiday-dates) | Northern Ireland term dates | BeautifulSoup scrape |
+| [gov.uk API](https://www.gov.uk/bank-holidays.json) | UK bank holidays (all nations) | JSON API |
+| [BRC-Sensormatic](https://brc.org.uk/retail-insight-analytics/footfall-and-sales-reports/) | Monthly footfall YoY % by destination type | Published press release figures |
 
 ---
 
 ## TODO
 
-- Add actual Funstation venue coordinates to map the venues spatially against their term date regions (would need scraping their site or LinkedIn)
-- Wire up live BRC footfall when it becomes available — currently using hardcoded published figures
+- Add actual Funstation venue coordinates to map venues spatially against their regional calendars (would need scraping their site)
+- Wire up live BRC footfall updates when new monthly data publishes — currently using hardcoded figures from 2024–25 press releases
+- Validate demand index against actual visitor count data if it becomes available
 
 ---
 
-*Nithin Arisetty — Senior BI Analyst, formerly Amazon UK*
+*Nithin Arisetty — Senior BI Analyst, formerly Amazon UK*  
+*Built as a portfolio project demonstrating applied demand forecasting for the UK FEC sector*
